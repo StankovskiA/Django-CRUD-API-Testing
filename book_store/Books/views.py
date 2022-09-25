@@ -5,7 +5,6 @@ from .models import Book
 from .serializers import BookSerializer
 
 
-# Create your views here.
 @api_view(['GET', 'DELETE', 'PUT'])
 def get_delete_update_book(request, pk):
     try:
@@ -25,7 +24,6 @@ def get_delete_update_book(request, pk):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['GET', 'POST'])
 def get_post_books(request):

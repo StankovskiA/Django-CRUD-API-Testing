@@ -11,11 +11,9 @@ client = Client()
 class GetAllBooksTest(TestCase):
     
     def setUp(self):
-        Book.objects.create(
-            name='Winnie Pooh', rating = 6, author = 'Sean Connery'
-        )    
-        Book.objects.create(
-            name='Harry Potter', rating = 7, author = 'Ryan Gosling'
+        self.LOTR = BookFactory()    
+        self.Harry = BookFactory(
+            name='Harry Potter', rating = 7, author = 'JK Rowling'
         )
     def test_get_all_books(self):
         response = client.get(reverse('get_post_books'))
@@ -30,7 +28,7 @@ class GetSingleBooktest(TestCase):
     def setUp(self):
         self.LOTR = BookFactory()    
         self.Harry = BookFactory(
-            name='Harry Potter', rating = 7, author = 'Ryan Gosling'
+            name='Harry Potter', rating = 7, author = 'JK Rowling'
         )
     def test_get_valid_single_book(self):
         response = client.get(
@@ -78,11 +76,9 @@ class CreateNewBookTest(TestCase):
 class UpdateSingleBookTest(TestCase):
 
     def setUp(self):
-        self.Winnie = Book.objects.create(
-            name='Winnie Pooh', rating = 6, author = 'Sean Connery'
-        )    
-        self.Harry = Book.objects.create(
-            name='Harry Potter', rating = 7, author = 'Ryan Gosling'
+        self.LOTR = BookFactory()    
+        self.Harry = BookFactory(
+            name='Harry Potter', rating = 7, author = 'JK Rowling'
         )
         self.valid_payload = {
             'name': 'Winnie Pooh',
@@ -97,7 +93,7 @@ class UpdateSingleBookTest(TestCase):
 
     def test_valid_update_book(self):
         response = client.put(
-            reverse('get_delete_update_book', kwargs={'pk': self.Winnie.pk}),
+            reverse('get_delete_update_book', kwargs={'pk': self.LOTR.pk}),
             data=json.dumps(self.valid_payload),
             content_type='application/json'
         )
@@ -105,7 +101,7 @@ class UpdateSingleBookTest(TestCase):
 
     def test_invalid_update_book(self):
         response = client.put(
-            reverse('get_delete_update_book', kwargs={'pk': self.Winnie.pk}),
+            reverse('get_delete_update_book', kwargs={'pk': self.LOTR.pk}),
             data=json.dumps(self.invalid_payload),
             content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -113,15 +109,13 @@ class UpdateSingleBookTest(TestCase):
 class DeleteSingleBookTest(TestCase):
 
     def setUp(self):
-        self.Winnie = Book.objects.create(
-            name='Winnie Pooh', rating = 6, author = 'Sean Connery'
-        )    
-        self.Harry = Book.objects.create(
-            name='Harry Potter', rating = 7, author = 'Ryan Gosling'
+        self.LOTR = BookFactory()    
+        self.Harry = BookFactory(
+            name='Harry Potter', rating = 7, author = 'JK Rowling'
         )
     def test_valid_delete_book(self):
         response = client.delete(
-            reverse('get_delete_update_book', kwargs={'pk': self.Winnie.pk}))
+            reverse('get_delete_update_book', kwargs={'pk': self.LOTR.pk}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_invalid_delete_book(self):
