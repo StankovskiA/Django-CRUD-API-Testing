@@ -3,7 +3,7 @@
 In this project I have used the Django Factory and Test modules as well as the Faker module to test the web service.
 
 ## 1. The Web Service
-The web service is a simple web service with all CRUD functionalities for the model Book which has the attributes book name, rating i author name.
+The web service is a simple web service with all CRUD functionalities for the model Book which has the attributes book name, rating and author name.
 
 ```
 Book:
